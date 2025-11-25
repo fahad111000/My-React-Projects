@@ -72,7 +72,7 @@ export default function App() {
     try {
       let result = eval(exp);
       setLower("");       // neeche result ko clear kar do (Samsung style)
-      setUpper(result);   // upper me final result shift
+      setUpper(String(result));   // upper me final result shift
       setLastPressed("=");
     } catch {
       setLower("Error");
