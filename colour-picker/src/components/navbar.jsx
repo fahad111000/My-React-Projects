@@ -1,5 +1,4 @@
-import { Spacer, Flex, Text, Button, theme } from "@chakra-ui/react"
-import { FaSun, FaMoon } from "react-icons/fa";
+import { Spacer, Flex, Text, Button } from "@chakra-ui/react"
 
 export default function Navbar({ theme, themeToggle }) {
     return (

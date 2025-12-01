@@ -1,11 +1,24 @@
 import { Heading, VStack } from "@chakra-ui/react"
 import Navbar from "./components/navbar"
 import ColorPick from "./components/colorPick"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function App() {
   const [theme, setTheme] = useState("light");
   const [colorPicker, setColorPicker] = useState("");
+
+  useEffect(() => {
+    const saved = localStorage.getItem('color');
+    if (saved) {
+      setColorPicker(saved);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('color', colorPicker)
+  }, [colorPicker])
+
+
 
   const themeToggle = () => {
     setTheme(prev => prev === "light" ? "dark" : "light");
@@ -26,7 +39,7 @@ export default function App() {
       </Heading>
 
       <Navbar theme={theme} themeToggle={themeToggle} />
-      <ColorPick setColorPicker={setColorPicker} colorPicker={colorPicker} />
+      <ColorPick colorPicker={colorPicker} setColorPicker={setColorPicker} />
     </VStack>
   )
 }
