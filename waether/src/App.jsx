@@ -1,16 +1,58 @@
 import { Image, Box, Grid, GridItem, Heading, Input, VStack, HStack, Text, Flex } from '@chakra-ui/react';
 import ee from "./assets/ee.png";
 import cloudy from "./assets/cloudy.png";
+import { useState } from 'react';
 // import rain from "./assets/rain.png";
 
 export default function App() {
+
+  const [city, setCity] = useState("");
+  const [waether, setWeather] = useState(null);
+
+
+  const handleSearch = async (e) => {
+    if (e.key !== "Enter") return;
+
+    const apiKey = '1fa7a7b1e0e782ce51806d3000f1899f'
+    try {
+      const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
+      const data = await res.json();
+      setWeather(data)
+
+      const forRes = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`);
+      const forecastData = await forRes.json();
+      const today = new Date().toISOString().split("T")[0];
+
+
+      const foreCast = forecastData.list.filter(item => {
+        return item.dt_txt.startsWith(today);
+      });
+      console.log(foreCast)
+
+
+    }
+
+    catch (err) {
+      console.log("Error")
+    }
+  }
+
+
 
   return (
     <Grid templateColumns={{ base: '1fr', lg: '2fr 1fr' }}
       bg='#0b131e' gap={'5'} padding={'10'}>
 
       <GridItem colSpan={{ base: 1, lg: 2 }} width={850}>
-        <Input placeholder='Enter a city' color={'#eeececb7'} border={'none'} bg={'#2c314156'} _focus={{ boxShadow: "none", borderColor: "transparent" }} />
+        <Input placeholder='Enter a city' color={'#eeececb7'}
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          border={'none'} bg={'#2c314156'} _focus={{
+            boxShadow: "none",
+            borderColor: "transparent"
+          }}
+          onKeyDown={(e) => handleSearch(e)}
+        />
       </GridItem>
 
       {/* Weather Left */}
@@ -19,18 +61,21 @@ export default function App() {
         <VStack color={'white'} align={'stretch'} >
 
           {/* Weather start */}
-          <HStack color={'#fff'} justifyContent={'space-around'} padding={'2'}>
-            <Box paddingY={'3'} >
-              <Heading paddingY={'2'}>Madrid</Heading>
-              <Text fontSize={'13px'}>Chance of rain: 0%</Text>
-              <Heading fontSize={'50px'} marginTop={'10'}>45</Heading>
-            </Box>
+          {waether && (
+            <HStack color={'#fff'} justifyContent={'space-around'} padding={'2'}>
 
-            <Box >
-              <Image src={ee} boxSize="300px" objectFit={'contain'} />
-            </Box>
+              <Box paddingY={'3'} >
+                <Heading paddingY={'2'}>{waether.name}</Heading>
+                <Text fontSize={'13px'}>Chance of rain: 0%</Text>
+                <Heading fontSize={'50px'} marginTop={'10'}>{Math.round(waether.main.temp)}°C</Heading>
+              </Box>
 
-          </HStack>
+              <Box >
+                <Image src={ee} boxSize="300px" objectFit={'contain'} />
+              </Box>
+
+            </HStack>
+          )}
 
           {/* Today Forecast */}
           <Box bg={'#2c314156'} color={'#dddbdba2'} padding={6} marginTop={'1'} borderRadius={'xl'}>
