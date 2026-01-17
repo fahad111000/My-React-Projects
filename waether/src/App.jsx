@@ -1,13 +1,23 @@
 import { Image, Box, Grid, GridItem, Heading, Input, VStack, HStack, Text, Flex } from '@chakra-ui/react';
 import ee from "./assets/ee.png";
 import cloudy from "./assets/cloudy.png";
+import rainy from "./assets/rainy.png";
 import { useState } from 'react';
-// import rain from "./assets/rain.png";
 
 export default function App() {
 
   const [city, setCity] = useState("");
-  const [waether, setWeather] = useState(null);
+  const [weather, setWeather] = useState(null);
+  const [dailyForecast, setDailyForecast] = useState([]);
+  const [todayForecast, setTodayForecast] = useState([]);
+
+  const weatherIcons = {
+    Clear: ee,
+    Clouds: cloudy,
+    Rain: rainy,
+    Drizzle: rainy,
+    Fog: cloudy,
+  }
 
 
   const handleSearch = async (e) => {
@@ -21,13 +31,35 @@ export default function App() {
 
       const forRes = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`);
       const forecastData = await forRes.json();
-      const today = new Date().toISOString().split("T")[0];
+      const days = {};
 
+      forecastData.list.forEach(list => {
+        const date = list.dt_txt.split(" ")[0];
+        if (!days[date]) {
+          days[date] = []
+        }
 
-      const foreCast = forecastData.list.filter(item => {
-        return item.dt_txt.startsWith(today);
+        days[date].push(list);
       });
-      console.log(foreCast)
+
+
+      const daily = Object.keys(days).map(date => {
+        const dayItems = days[date];
+
+        return {
+          date: date,
+          dayName: new Date(date).toLocaleDateString("en-US", { weekday: "long" }),
+
+          tempMax: Math.round(Math.max(...dayItems.map(i => i.main.temp))),
+          tempMin: Math.round(Math.min(...dayItems.map(i => i.main.temp))),
+          weather: dayItems[0].weather[0].main,
+        }
+
+      })
+
+      setDailyForecast(daily.slice(0, 5));
+      const next24Hours = forecastData.list.slice(0, 8);
+      setTodayForecast(next24Hours);
 
 
     }
@@ -61,17 +93,17 @@ export default function App() {
         <VStack color={'white'} align={'stretch'} >
 
           {/* Weather start */}
-          {waether && (
+          {weather && (
             <HStack color={'#fff'} justifyContent={'space-around'} padding={'2'}>
 
               <Box paddingY={'3'} >
-                <Heading paddingY={'2'}>{waether.name}</Heading>
+                <Heading paddingY={'2'}>{weather.name}</Heading>
                 <Text fontSize={'13px'}>Chance of rain: 0%</Text>
-                <Heading fontSize={'50px'} marginTop={'10'}>{Math.round(waether.main.temp)}°C</Heading>
+                <Heading fontSize={'50px'} marginTop={'10'}>{Math.round(weather.main.temp)}°C</Heading>
               </Box>
 
               <Box >
-                <Image src={ee} boxSize="300px" objectFit={'contain'} />
+                <Image src={weatherIcons[weather.weather[0].main] || cloudy} boxSize="300px" objectFit={'contain'} />
               </Box>
 
             </HStack>
@@ -82,13 +114,25 @@ export default function App() {
             <Text fontSize={'17px'} >Today Forecast</Text>
 
             <HStack align={'stretch'}>
+              {todayForecast.map((item, index) => (
 
-              <Flex paddingX={'5'} marginTop={'6'} alignItems={'center'} gap={'1'}
-                direction={'column'} borderRight={'1px solid #c4c2c270'} fontSize={'15px'}>
-                <Text>6:00</Text>
-                <Image src={cloudy} boxSize={"43px"} />
-                <Text color={'white'} fontWeight={'bold'} fontSize={'20px'}>25*</Text>
-              </Flex>
+                <Flex paddingX={'5'} marginTop={'6'} alignItems={'center'} gap={'1'} key={index}
+                  direction={'column'} borderRight={'1px solid #c4c2c270'} fontSize={'15px'}>
+                  <Text>
+                    {new Date(item.dt_txt).toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    })}
+                  </Text>
+                  <Image
+                    src={weatherIcons[item.weather[0].main] || cloudy}
+                    boxSize="43px"
+                    objectFit="contain"
+                  />
+                  <Text color={'white'} fontWeight={'bold'} fontSize={'20px'}>{Math.round(item.main.temp)}°</Text>
+                </Flex>
+
+              ))}
 
 
             </HStack>
@@ -145,18 +189,22 @@ export default function App() {
           <Text fontWeight={'bold'}>   Day forecast</Text>
 
           <VStack fontSize={'14'} marginTop={'5'} paddingBottom={'5'} borderBottom={'1px solid #dad9d934'} align={'stretch'}>
-            <Flex justifyContent={'space-between'} padding={'3'} alignItems={'center'}>
+            {dailyForecast.map((day, index) => (
 
-              <Text>Today</Text>
+              <Flex key={index} justifyContent={'space-between'} padding={'3'} alignItems={'center'}>
 
-              <Box display={'flex'} alignItems={'center'} border={'2px solid reds'}>
-                <Image src={ee} boxSize={'70px'} objectFit={'contain'} />
-                <Text fontWeight={'bold'}>Sunny</Text>
-              </Box>
-              <Text > <Text as="span" color={'#fff'}>36</Text>/22</Text>
-            </Flex>
+                <Text w="90px">
+                  {index === 0 ? "Today" : day.dayName}
+                </Text>
+                <Box display={'flex'} alignItems={'center'} border={'2px solid reds'}>
+                  <Image src={weatherIcons[day.weather] || cloudy} boxSize={'80px'} objectFit={'contain'} />
+                  <Text fontWeight={'bold'} >{day.weather}</Text>
+                </Box>
+                <Text > <Text as="span" color={'#fff'}>{day.tempMax}</Text>/{day.tempMin}°</Text>
+              </Flex>
 
 
+            ))}
 
           </VStack>
 
