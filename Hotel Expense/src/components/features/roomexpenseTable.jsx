@@ -4,8 +4,9 @@ import {
 
 export default function RoomsTable() {
     return (
-        <Box>
-            <Table.Root>
+        <Box overflow={'hidden'} maxW={'1200px'} my={10} borderRadius={'lg'} mx={'auto'} border={'2px solid #e2e8f0'}>
+
+            <Table.Root >
                 <Table.Header>
                     <Table.Row>
                         <Table.ColumnHeader>Sno</Table.ColumnHeader>
@@ -31,11 +32,11 @@ export default function RoomsTable() {
                         <Table.Cell>
                             <Input placeholder={'Price'} size={'sm'} type="number" />
                         </Table.Cell>
-                        
+
                         <Table.Cell borderLeft={'2px solid #e2e8f0'}>
                             <Input placeholder={'Expense'} size={'sm'} />
 
-                            
+
                         </Table.Cell>
 
                         <Table.Cell  >
@@ -62,12 +63,13 @@ export default function RoomsTable() {
 
                     {/* Net Cash */}
                     <Table.Row>
-                        <Table.Cell borderRight={'2px solid #e2e8f0'} colSpan={1} textAlign="left" fontWeight="bold">Net Cash</Table.Cell>
-                        <Table.Cell borderRight={'2px solid #e2e8f0'} colSpan={2} textAlign="left" fontWeight="bold">3000</Table.Cell>
+                        <Table.Cell borderBottom={'none'} borderRight={'2px solid #e2e8f0'} colSpan={1} textAlign="left" fontWeight="bold">Net Cash</Table.Cell>
+                        <Table.Cell borderBottom={'none'} borderRight={'2px solid #e2e8f0'} colSpan={2} textAlign="left" fontWeight="bold">3000</Table.Cell>
                     </Table.Row>
+
 
                 </Table.Body>
             </Table.Root>
-        </Box>
+        </Box >
     )
 }
