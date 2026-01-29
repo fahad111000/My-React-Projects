@@ -1,8 +1,9 @@
+
 import { Flex, Text, Input, Box } from "@chakra-ui/react"
 export default function ShiftInfo() {
     return (
-        <Box maxW={'1200px'} mx={'auto'}>
-            <Flex borderBottom={'1p solid #70707263'} justifyContent={'space-between'} my={'5'} >
+        <Box  maxW={'1200px'} mx={'auto'}> 
+            <Flex  justifyContent={'space-between'} my={10}>
 
                 <Flex gap={2} flexDirection={'column'}>
                     <Text fontWeight={'semibold'}>Manager</Text>
