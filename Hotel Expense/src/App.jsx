@@ -7,8 +7,7 @@ import { Box } from "@chakra-ui/react"
 
 export default function App() {
   return (
-    
-    <Box >
+    <Box bg={'customBg'} >
     <Header />
       <ShiftInfo />
       <RoomsTable />

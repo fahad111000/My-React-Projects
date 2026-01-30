@@ -1,10 +1,10 @@
 import { Box, Text, Flex } from "@chakra-ui/react"
 export default function FinalSummary() {
     return (
-        <Box mt={15}  maxW={"1200px"} mx={'auto'} border={'2px solid #e2e8f0'} borderRadius={'md'} p={6}>
+        <Box color={'appText'} mt={15} maxW={"1200px"} mx={'auto'} border={'2px solid'} borderColor={'appBorder'} borderRadius={'md'} p={6}>
 
             <Text fontSize="20px" fontWeight="bold" mb={4} textAlign="center">Final Summary</Text>
-            <Box borderBottom={'1px solid'} borderColor={'border.light'} />
+            <Box borderBottom={'1px solid'} borderColor={'appBorder'} />
             <Flex justify="space-between" my={5}>
                 <Text>Total Room </Text>
                 <Text fontWeight="bold">30</Text>
@@ -20,7 +20,7 @@ export default function FinalSummary() {
                 <Text fontWeight="bold">3,000</Text>
             </Flex>
 
-            <Box borderTop="1px solid" borderColor={'border.light'} my={5} />
+            <Box borderTop="1px solid" borderColor={'appBorder'} my={5} />
 
             <Flex justify="space-between">
                 <Text fontSize="lg" fontWeight="bold">
