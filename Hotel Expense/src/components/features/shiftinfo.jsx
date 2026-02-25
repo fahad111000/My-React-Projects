@@ -10,7 +10,7 @@ const shifts = createListCollection({
 });
 
 
-export default function ShiftInfo({ setActiveShift, currentManger, onUpdate }) {
+export default function ShiftInfo({ setActiveShift, currentShitData, onUpdate }) {
     return (
         <Box maxW={'1200px'} mx={'auto'} color={'appText'}>
             <Flex justifyContent={'space-between'} my={10}>
@@ -20,7 +20,7 @@ export default function ShiftInfo({ setActiveShift, currentManger, onUpdate }) {
                 <Flex gap={2} flexDirection={'column'}>
                     <Text fontWeight={'semibold'}>Manager</Text>
                     <Input placeholder="Manager Name" size={'sm'}
-                        value={currentManger}
+                        value={currentShitData.manager}
                         onChange={(e) => onUpdate("manager", e.target.value)} />
                 </Flex>
 
@@ -31,6 +31,8 @@ export default function ShiftInfo({ setActiveShift, currentManger, onUpdate }) {
                         type="date"
                         size="sm"
                         cursor={'pointer'}
+                        value={currentShitData.date}
+                        onChange={(e) => onUpdate("date", e.target.value)}
                     />
                 </Flex>
 
@@ -41,6 +43,8 @@ export default function ShiftInfo({ setActiveShift, currentManger, onUpdate }) {
                         type="time"
                         size="sm"
                         cursor={'pointer'}
+                        value={currentShitData.time}
+                        onChange={(e) => onUpdate("time", e.target.value)}
                     />
                 </Flex>
 

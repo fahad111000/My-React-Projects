@@ -11,8 +11,8 @@ export default function App() {
   const [shiftsData, setShiftsData] = useState(() => {
     const savedData = localStorage.getItem("hotel_app_data");
     return savedData ? JSON.parse(savedData) : {
-      morning: { rooms: [], expense: [], manager: "" },
-      night: { rooms: [], expense: [], manager: "" }
+      morning: { rooms: [], expense: [], manager: "", date: "", time: "" },
+      night: { rooms: [], expense: [], manager: "", date: "", time: "" }
     };
   });
 
@@ -31,10 +31,9 @@ export default function App() {
   return (
     <Box bg={'customBg'}>
       <Header />
-      <ShiftInfo setActiveShift={setActiveShift} currentManger={shiftsData[activeShift].manager} onUpdate={handleUpdateData} />
+      <ShiftInfo setActiveShift={setActiveShift} currentShitData={shiftsData[activeShift]} onUpdate={handleUpdateData} />
       <RoomsTable currentData={shiftsData[activeShift]} onUpdate={handleUpdateData} />
-      {/* <Text fontWeight={'semibold'}>{activeShift}</Text> */}
-      {/* <FinalSummary /> */}
+      <FinalSummary shiftsData={shiftsData} />
     </Box >
   )
 

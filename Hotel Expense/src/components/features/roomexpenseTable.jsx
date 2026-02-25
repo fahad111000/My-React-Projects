@@ -74,7 +74,7 @@ export default function RoomsTable({ currentData, onUpdate }) {
     // console.log(totalRoomRent)
 
     return (
-        <Box maxW={'1250px'} mx={'auto'} my={10} p={4} height={'100vh'}>
+        <Box maxW={'1250px'} mx={'auto'} my={10} p={4} >
 
             <Grid alignItems={'start'} templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
 
