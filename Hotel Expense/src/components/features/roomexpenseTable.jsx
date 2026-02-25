@@ -1,11 +1,15 @@
-import { Box, Table, Input, Button, Flex, Text, IconButton, Grid } from "@chakra-ui/react";
+import { Box, Table, Input, Button, Flex, Text, Grid } from "@chakra-ui/react";
 import { LuTrash2 } from "react-icons/lu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function RoomsTable() {
+export default function RoomsTable({ currentData, onUpdate }) {
+    const [rooms, setRooms] = useState(currentData.rooms || []);
+    const [expense, setExpense] = useState(currentData.expense || []);
 
-    const [rooms, setRooms] = useState([]);
-    const [expense, setExpense] = useState([]);
+    useEffect(() => {
+        setRooms(currentData.rooms || []);
+        setExpense(currentData.expense || []);
+    }, [currentData]);
 
     const isLastRoomEmpty =
         rooms.length > 0 && (!rooms[rooms.length - 1].roomNo || !rooms[rooms.length - 1].price);
@@ -13,47 +17,55 @@ export default function RoomsTable() {
     const isLastExpenseEmpty =
         expense.length > 0 && (!expense[expense.length - 1].desc || !expense[expense.length - 1].price);
 
+    // --- Rooms Handlers ---
     const addRow = () => {
-        const newRoom = {
-            id: Date.now(),
-            roomNo: "",
-            price: ""
-        };
-        setRooms([...rooms, newRoom]);
+        const newRooms = [...rooms, { id: Date.now(), roomNo: "", price: "" }];
+        setRooms(newRooms);
+        onUpdate('rooms', newRooms); // Parent (App.js) mein save
     };
 
     const handelRooms = (value, field, index) => {
         const updatedRooms = [...rooms];
         updatedRooms[index][field] = value;
         setRooms(updatedRooms);
+        onUpdate('rooms', updatedRooms);
+    };
 
-    }
+    const deleteRoom = (index) => {
+        const updatedRooms = rooms.filter((_, i) => i !== index);
+        setRooms(updatedRooms);
+        onUpdate('rooms', updatedRooms);
+    };
+
+    // --- Expense Handlers ---
+    const addExpense = () => {
+        const newExpense = [...expense, { id: Date.now(), desc: "", price: "" }];
+        setExpense(newExpense);
+        onUpdate('expense', newExpense);
+    };
 
     const handelExpenses = (value, field, index) => {
         const updatedExpense = [...expense];
         updatedExpense[index][field] = value;
         setExpense(updatedExpense);
-    }
-
-
-    const addExpense = () => {
-        const newExpense = {
-            id: rooms.length + 1,
-            desc: "",
-            price: ""
-        };
-
-        setExpense([...expense, newExpense]);
-    }
-
-    const deleteRoom = (index) => {
-        const updatedRooms = rooms.filter((_, i) => i !== index);
-        setRooms(updatedRooms);
+        onUpdate('expense', updatedExpense);
     };
+
+
+    // const deleteRoom = (index) => {
+    //     const updatedRooms = rooms.filter((_, i) => i !== index);
+    //     setRooms(updatedRooms);
+    // };
+
+    // const deleteExpense = (index) => {
+    //     const updatedExpense = expense.filter((_, i) => i !== index);
+    //     setExpense(updatedExpense);
+    // };
 
     const deleteExpense = (index) => {
         const updatedExpense = expense.filter((_, i) => i !== index);
         setExpense(updatedExpense);
+        onUpdate('expense', updatedExpense);
     };
 
     const totalRoomRent = rooms.reduce((sum, item) => sum + (Number(item.price || 0)), 0);
@@ -67,7 +79,7 @@ export default function RoomsTable() {
             <Grid alignItems={'start'} templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
 
                 {/* LEFT SIDE: ROOMS TABLE */}
-                <Box border="2px solid" borderColor="appBorder" borderRadius="lg" overflow="hidden">
+                <Box border="2px solid " borderColor="appBorder" borderRadius="lg" overflow="hidden">
                     <Flex bg="tableHeaderBg" p={3} justifyContent="space-between" align="center">
                         <Text fontWeight="bold">Rooms Entry</Text>
                         <Button
