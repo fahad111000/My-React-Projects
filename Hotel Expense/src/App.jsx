@@ -2,7 +2,7 @@ import Header from "./components/features/header"
 import ShiftInfo from "./components/features/shiftinfo"
 import RoomsTable from "./components/features/roomexpenseTable"
 import FinalSummary from "./components/features/finalReport"
-import { Box, Text } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 import { useState, useEffect } from "react"
 
 
@@ -15,6 +15,9 @@ export default function App() {
       night: { rooms: [], expense: [], manager: "", date: "", time: "" }
     };
   });
+
+  const [shiftClosed, setShiftClosed] = useState(false);
+
 
   const [activeShift, setActiveShift] = useState("morning");
 
@@ -32,7 +35,7 @@ export default function App() {
     <Box bg={'customBg'}>
       <Header />
       <ShiftInfo setActiveShift={setActiveShift} currentShitData={shiftsData[activeShift]} onUpdate={handleUpdateData} />
-      <RoomsTable currentData={shiftsData[activeShift]} onUpdate={handleUpdateData} />
+      <RoomsTable currentData={shiftsData[activeShift]} shiftClosed={shiftClosed} setShiftClosed={setShiftClosed} onUpdate={handleUpdateData} />
       <FinalSummary shiftsData={shiftsData} />
     </Box >
   )
