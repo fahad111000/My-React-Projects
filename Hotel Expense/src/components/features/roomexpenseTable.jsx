@@ -246,7 +246,10 @@ export default function RoomsTable({ currentData, onUpdate, shiftClosed, setShif
             </Box >
 
             <Flex mt={6} gap={5} justify="left" hideFrom="print" >
-                <Button colorScheme="blue" _hover={{ bg: 'blue.500' }} onClick={() => window.print()}>
+                <Button
+                    colorScheme="blue"
+                    _hover={{ bg: 'blue.500' }}
+                    onClick={() => window.print()}>
                     Print Report
                 </Button>
 
@@ -255,7 +258,10 @@ export default function RoomsTable({ currentData, onUpdate, shiftClosed, setShif
                     motionPreset="slide-in-bottom" open={isDialogOpen}
                     onOpenChange={(e) => setIsDialogOpen(e.open)}>
                     <DialogTrigger asChild>
-                        <Button colorScheme="red" px={5} _hover={{ bg: 'red.600' }}>
+                        <Button
+                            disabled={shiftClosed}
+                            colorScheme="red" px={5}
+                            _hover={{ bg: 'red.600' }}>
                             Shift Close
                         </Button>
                     </DialogTrigger>

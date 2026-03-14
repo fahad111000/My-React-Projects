@@ -6,7 +6,7 @@ import { ChakraProvider } from "@chakra-ui/react"
 import { system } from './theme.js'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <ChakraProvider value={system}>
 
       <ColorModeProvider>
@@ -14,5 +14,5 @@ createRoot(document.getElementById('root')).render(
       </ColorModeProvider>
     </ChakraProvider>
 
-  </StrictMode>,
+  // </StrictMode>,
 )

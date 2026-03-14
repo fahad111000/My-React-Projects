@@ -10,7 +10,7 @@ const shifts = createListCollection({
 });
 
 
-export default function ShiftInfo({ setActiveShift, currentShiftData, shiftClosed, onUpdate }) {
+export default function ShiftInfo({ setActiveShift, activeShift, currentShiftData, shiftClosed, onUpdate }) {
     return (
         <Box maxW={'1200px'} mx={'auto'} color={'appText'}>
             <Flex justifyContent={'space-between'} my={10}>
@@ -54,7 +54,7 @@ export default function ShiftInfo({ setActiveShift, currentShiftData, shiftClose
                     <Text fontWeight={'semibold'}>Select Shift</Text>
 
                     <SelectRoot collection={shifts}
-
+                        value={[activeShift]}
                         onValueChange={(details) => {
                             const selectedValue = details.value[0]
                             setActiveShift(selectedValue)

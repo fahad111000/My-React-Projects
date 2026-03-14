@@ -9,12 +9,14 @@ import { useState, useEffect } from "react"
 export default function App() {
 
   const [shiftsData, setShiftsData] = useState(() => {
-    const savedData = localStorage.getItem("hotel_app_data");
+    const savedData = localStorage.getItem("hotel_data");
     return savedData ? JSON.parse(savedData) : {
       morning: { rooms: [], expense: [], manager: "", date: "", time: "", shiftClosed: false },
       night: { rooms: [], expense: [], manager: "", date: "", time: "", shiftClosed: false }
     };
   });
+
+
 
   const handelResetShift = () => {
     let newShiftsData = { ...shiftsData };
@@ -34,7 +36,7 @@ export default function App() {
   const [activeShift, setActiveShift] = useState("morning");
 
   useEffect(() => {
-    localStorage.setItem("hotel_app_data", JSON.stringify(shiftsData));
+    localStorage.setItem("hotel_data", JSON.stringify(shiftsData));
   }, [shiftsData]);
 
   const handleUpdateData = (type, newData) => {
@@ -48,7 +50,7 @@ export default function App() {
 
       <Header />
 
-      <ShiftInfo setActiveShift={setActiveShift}
+      <ShiftInfo activeShift={activeShift} setActiveShift={setActiveShift}
         currentShiftData={shiftsData[activeShift]}
         onUpdate={handleUpdateData}
         shiftClosed={shiftsData[activeShift].shiftClosed} />
