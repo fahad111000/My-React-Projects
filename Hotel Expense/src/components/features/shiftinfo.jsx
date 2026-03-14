@@ -10,7 +10,7 @@ const shifts = createListCollection({
 });
 
 
-export default function ShiftInfo({ setActiveShift, currentShitData, onUpdate }) {
+export default function ShiftInfo({ setActiveShift, currentShiftData, shiftClosed, onUpdate }) {
     return (
         <Box maxW={'1200px'} mx={'auto'} color={'appText'}>
             <Flex justifyContent={'space-between'} my={10}>
@@ -19,19 +19,20 @@ export default function ShiftInfo({ setActiveShift, currentShitData, onUpdate })
                 {/* Manager */}
                 <Flex gap={2} flexDirection={'column'}>
                     <Text fontWeight={'semibold'}>Manager</Text>
-                    <Input placeholder="Manager Name" size={'sm'}
-                        value={currentShitData.manager}
+                    <Input disabled={shiftClosed}
+                        placeholder="Manager Name" size={'sm'}
+                        value={currentShiftData.manager || ""}
                         onChange={(e) => onUpdate("manager", e.target.value)} />
                 </Flex>
 
                 {/* date */}
                 <Flex gap={2} flexDirection={'column'}>
                     <Text fontWeight={'semibold'}>Date</Text>
-                    <Input
+                    <Input disabled={shiftClosed}
                         type="date"
                         size="sm"
                         cursor={'pointer'}
-                        value={currentShitData.date}
+                        value={currentShiftData.date || ""}
                         onChange={(e) => onUpdate("date", e.target.value)}
                     />
                 </Flex>
@@ -39,11 +40,11 @@ export default function ShiftInfo({ setActiveShift, currentShitData, onUpdate })
                 {/* Time */}
                 <Flex gap={2} flexDirection={'column'}>
                     <Text fontWeight={'semibold'}>Time</Text>
-                    <Input
+                    <Input disabled={shiftClosed}
                         type="time"
                         size="sm"
                         cursor={'pointer'}
-                        value={currentShitData.time}
+                        value={currentShiftData.time || ""}
                         onChange={(e) => onUpdate("time", e.target.value)}
                     />
                 </Flex>

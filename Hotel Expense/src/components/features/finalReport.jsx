@@ -17,7 +17,7 @@ export default function FinalSummary({ shiftsData }) {
             <Box borderBottom={'1px solid'} borderColor={'appBorder'} />
             <Flex justify="space-between" my={5}>
                 <Text>Total Room </Text>
-                <Text fontWeight="bold">{totalSale.length}</Text>
+                <Text fontWeight="bold">{allRoomsRent.length}</Text>
             </Flex>
 
             <Flex justify="space-between" my={5}>

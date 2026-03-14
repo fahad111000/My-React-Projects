@@ -11,14 +11,26 @@ export default function App() {
   const [shiftsData, setShiftsData] = useState(() => {
     const savedData = localStorage.getItem("hotel_app_data");
     return savedData ? JSON.parse(savedData) : {
-      morning: { rooms: [], expense: [], manager: "", date: "", time: "" },
-      night: { rooms: [], expense: [], manager: "", date: "", time: "" }
+      morning: { rooms: [], expense: [], manager: "", date: "", time: "", shiftClosed: false },
+      night: { rooms: [], expense: [], manager: "", date: "", time: "", shiftClosed: false }
     };
   });
 
-  const [shiftClosed, setShiftClosed] = useState(false);
+  const handelResetShift = () => {
+    let newShiftsData = { ...shiftsData };
+    newShiftsData[activeShift] = {
+      rooms: [],
+      expense: [],
+      manager: "",
+      date: "",
+      time: "",
+      shiftClosed: false
+    };
 
+    setShiftsData(newShiftsData)
+  }
 
+  // shifts selection
   const [activeShift, setActiveShift] = useState("morning");
 
   useEffect(() => {
@@ -33,10 +45,22 @@ export default function App() {
 
   return (
     <Box bg={'customBg'}>
+
       <Header />
-      <ShiftInfo setActiveShift={setActiveShift} currentShitData={shiftsData[activeShift]} onUpdate={handleUpdateData} />
-      <RoomsTable currentData={shiftsData[activeShift]} shiftClosed={shiftClosed} setShiftClosed={setShiftClosed} onUpdate={handleUpdateData} />
+
+      <ShiftInfo setActiveShift={setActiveShift}
+        currentShiftData={shiftsData[activeShift]}
+        onUpdate={handleUpdateData}
+        shiftClosed={shiftsData[activeShift].shiftClosed} />
+
+      <RoomsTable currentData={shiftsData[activeShift]}
+        shiftClosed={shiftsData[activeShift].shiftClosed}
+        setShiftClosed={(val) => { handleUpdateData("shiftClosed", val) }}
+        onUpdate={handleUpdateData}
+        onReset={handelResetShift} />
+
       <FinalSummary shiftsData={shiftsData} />
+
     </Box >
   )
 

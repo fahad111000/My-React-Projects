@@ -7,7 +7,7 @@ import { LuTrash2 } from "react-icons/lu";
 import { useState, useEffect } from "react";
 
 
-export default function RoomsTable({ currentData, onUpdate, shiftClosed, setShiftClosed }) {
+export default function RoomsTable({ currentData, onUpdate, shiftClosed, setShiftClosed, onReset }) {
     const [rooms, setRooms] = useState(currentData.rooms || []);
     const [expense, setExpense] = useState(currentData.expense || []);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -31,6 +31,7 @@ export default function RoomsTable({ currentData, onUpdate, shiftClosed, setShif
     };
 
     const handelRooms = (value, field, index) => {
+        // Copy array 
         const updatedRooms = [...rooms];
         updatedRooms[index][field] = value;
         setRooms(updatedRooms);
@@ -300,6 +301,9 @@ export default function RoomsTable({ currentData, onUpdate, shiftClosed, setShif
                     </DialogContent>
                 </DialogRoot>
 
+                <Button onClick={onReset}>
+                    Reset Current Shift
+                </Button>
 
 
 
