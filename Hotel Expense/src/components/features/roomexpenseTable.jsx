@@ -59,16 +59,6 @@ export default function RoomsTable({ currentData, onUpdate, shiftClosed, setShif
     };
 
 
-    // const deleteRoom = (index) => {
-    //     const updatedRooms = rooms.filter((_, i) => i !== index);
-    //     setRooms(updatedRooms);
-    // };
-
-    // const deleteExpense = (index) => {
-    //     const updatedExpense = expense.filter((_, i) => i !== index);
-    //     setExpense(updatedExpense);
-    // };
-
     const deleteExpense = (index) => {
         const updatedExpense = expense.filter((_, i) => i !== index);
         setExpense(updatedExpense);
