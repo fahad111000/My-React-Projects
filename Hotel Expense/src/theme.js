@@ -6,7 +6,7 @@ const config = defineConfig({
     semanticTokens: {
       colors: {
 
-        // CutomeBg color for light and dark mode
+        // CutomBg color for light and dark mode
         customBg: {
           value: {
             base: "#f4f4f4", // Soft Off-white

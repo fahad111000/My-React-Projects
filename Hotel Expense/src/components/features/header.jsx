@@ -1,5 +1,5 @@
 import { LuSun, LuMoon } from "react-icons/lu";
-import { Box, Text, Flex, Button, IconButton } from "@chakra-ui/react"
+import { Box, Text, Flex, IconButton } from "@chakra-ui/react"
 import { useColorMode } from "../ui/color-mode"
 
 
