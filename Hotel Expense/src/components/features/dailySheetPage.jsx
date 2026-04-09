@@ -1,4 +1,4 @@
-import Header from "../../components/features/header"
+// import Header from "../../components/features/header"
 import ShiftInfo from "../../components/features/shiftinfo"
 import RoomsTable from "../../components/features/roomexpenseTable"
 import FinalSummary from "../../components/features/finalReport"
@@ -50,7 +50,7 @@ export default function DailySheet() {
     return (
         <Box bg={'customBg'}>
 
-            <Header />
+            {/* <Header /> */}
 
             <ShiftInfo activeShift={activeShift} setActiveShift={setActiveShift}
                 currentShiftData={shiftsData[activeShift]}

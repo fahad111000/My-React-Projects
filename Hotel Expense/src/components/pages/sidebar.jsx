@@ -1,6 +1,5 @@
-
 import { VStack, Icon, Text, Box, Flex } from "@chakra-ui/react"
-import { LucideClipboard, LucideHistory, LucideLayoutDashboard, LucideTrendingUp } from "lucide-react"
+import { LuClipboard, LuHistory, LuLayoutDashboard, LuTrendingUp } from "react-icons/lu"
 
 
 
@@ -8,13 +7,16 @@ export default function SideBar({ view, setView }) {
 
     return (
         <Box
-            w='260px'
+            position={'sticky'}
+            top={0}
+            w='200px'
             h='100vh'
             bg="white"
             borderRight='2px solid'
             borderColor='appBorder'
-            px={1}
+            px={0}
             shadow={'md'}
+
 
         >
             <VStack align={'strech'} gap={1}  >
@@ -36,15 +38,16 @@ export default function SideBar({ view, setView }) {
                 {/* Navigation Links */}
                 <NavItem
                     label={'dashboard'}
-                    icon={LucideLayoutDashboard}
+                    icon={LuLayoutDashboard}
                     isActive={view === 'dashboard'}
                     onClick={() => setView('dashboard')}
+
                 />
 
                 {/* Dailysheet */}
                 <NavItem
                     label={'daily-sheet'}
-                    icon={LucideClipboard}
+                    icon={LuClipboard}
                     isActive={view === 'daily sheet'}
                     onClick={() => setView('daily sheet')}
                 />
@@ -53,19 +56,19 @@ export default function SideBar({ view, setView }) {
                 {/* This week */}
                 <NavItem
                     label={'this week'}
-                    icon={LucideHistory}
-                    isActive={view === 'this week'}
-                    onClick={() => setView('this week')}
+                    icon={LuHistory}
+                    isActive={view === 'this year'}
+                    onClick={() => setView('this year')}
                 />
+
 
                 {/* This month */}
                 <NavItem
                     label={'this month'}
-                    icon={LucideTrendingUp}
+                    icon={LuTrendingUp}
                     isActive={view === 'this month'}
                     onClick={() => setView('this month')}
                 />
-
 
 
             </VStack>
@@ -84,20 +87,20 @@ function NavItem({ label, icon, isActive, onClick }) {
             gap={4}
             p={4}
             cursor={'pointer'}
-            borderRadius={'sm'}
+            borderRadius={'none'}
             transition={'all 0.2s'}
 
             bg={isActive ? "blue.50" : "transparent"}
             color={isActive ? "blue.600" : "gray.600"}
 
-            _hover={{ bg: "gray.50", color: "blue.500" }}
+            _hover={{ bg: "gray.100", color: "blue.500" }}
         >
 
             {/* Icon */}
-            <Icon as={icon} fontSize={'20px'} />
+            <Icon as={icon} fontSize={'18px'} />
 
             {/* Text */}
-            <Text>
+            <Text fontSize={'14px'}>
                 {label}
             </Text>
 

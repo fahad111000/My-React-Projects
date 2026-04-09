@@ -9,7 +9,7 @@ export default function MainDashboard() {
     const [view, setView] = useState('dashboard');
 
     return (
-        <Box>
+        <Box height={'100%'} >
             {/* <ShiftInfo /> */}
 
             <Flex>
@@ -20,7 +20,7 @@ export default function MainDashboard() {
                 <Box border={'1px solid '} borderColor={'appBorder'} />
 
                 {/*DsiplayContent  */}
-                <Box flex={1} p={2} my={1}>
+                <Box  flex={1} p={2} my={1}>
 
                     {/* Current Page Showing */}
                     <Box p={2} px={4} my={1}>
